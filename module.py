@@ -12,15 +12,9 @@ for target in df["Survived"].unique():
         target
     ] = dict()
     for column in df.columns[1:]:
-        dict_wights[
-            target
-        ][
-            column
-        ] = dict()
+        dict_wights[target][column] = dict()
         for value in df[column].unique():
-            dict_wights[target][column][value] = 0
-        for value in df[column][df["Survived"] == target]:
-            dict_wights[target][column][value] += 1
+            dict_wights[target][column][value] = df[column][(df["Survived"] == target) & (df[column] == value)].shape[0]
 
 
 pprint(dict_wights)
