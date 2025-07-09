@@ -17,10 +17,16 @@ class CleanData:
         ]
         choices = ["< 20","20-39","40-59","60-80"]
         cleaner_df['Age'] = np.select(conditions,choices,default="")
+        cleaner_df['Embarked'] = cleaner_df['Embarked'].replace({
+            'C': 'Cherbourg',
+            'Q': 'Queenstown',
+            'S': 'Southampton'
+
+        })
 
         return cleaner_df, "Survived"
 
-cd = CleanData()
-df = cd.clean_df(ReadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\train.csv").get_data())[0]
-# print(df["Age"].min())
-print(df['Age'])
+# cd = CleanData()
+# df = cd.clean_df(ReadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\train.csv").get_data())[0]
+# # print(df["Age"].min())
+# print(df['Embarked'])
