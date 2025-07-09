@@ -2,7 +2,7 @@ import pandas as pd
 from pandas import DataFrame
 from pprint import pprint
 
-df = pd.read_csv("train.csv")
+df = pd.read_csv("Data/train.csv")
 df = df.dropna()
 df = df.drop(columns=['Name','PassengerId'])
 
