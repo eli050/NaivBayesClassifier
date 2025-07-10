@@ -12,9 +12,7 @@ class CreateModel:
         dict_targets_size = self.df[self.target_column].value_counts().to_dict()
         dict_wights = dict()
         for target in self.df[self.target_column].unique():
-            dict_wights[
-                target
-            ] = dict()
+            dict_wights[target] = dict()
             dict_targets_size[target] = log(dict_targets_size[target] / self.df.size)
             for column in self.df.columns:
                 if column == self.target_column:
@@ -40,9 +38,9 @@ class CreateModel:
 
 
 
-rc = ReadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\train.csv")
-df_trg = CleanData().clean_df(rc.get_data())
-pprint(df_trg[0].columns)
-cm = CreateModel(df_trg[0],df_trg[1])
-pprint(cm.get_dict_wights()[1])
-# cm.get_dict_wights()
+# rc = ReadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\train.csv")
+# df_trg = CleanData().clean_df(rc.get_data())
+# pprint(df_trg[0].columns)
+# cm = CreateModel(df_trg[0],df_trg[1])
+# pprint(cm.get_dict_wights()[1])
+# # cm.get_dict_wights()
