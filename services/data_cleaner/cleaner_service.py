@@ -1,0 +1,32 @@
+import pandas as pd
+import numpy as np
+
+from services.data_reader.read_csv import ReadCSV
+
+
+class CleanData:
+    @staticmethod
+    def clean_df(df:pd.DataFrame):
+        cleaner_df = df.dropna()
+        cleaner_df = cleaner_df.drop(columns=['Name','PassengerId'])
+        conditions = [
+            cleaner_df['Age'] < 20,
+            cleaner_df['Age'].between(20,39),
+            cleaner_df['Age'].between(40, 59),
+            cleaner_df['Age'].between(60, 80)
+        ]
+        choices = ["< 20","20-39","40-59","60-80"]
+        cleaner_df['Age'] = np.select(conditions,choices,default="")
+        cleaner_df['Embarked'] = cleaner_df['Embarked'].replace({
+            'C': 'Cherbourg',
+            'Q': 'Queenstown',
+            'S': 'Southampton'
+
+        })
+
+        return cleaner_df, "Survived"
+
+# cd = CleanData()
+# df = cd.clean_df(ReadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\train.csv").get_data())[0]
+# # print(df["Age"].min())
+# print(df['Embarked'])
