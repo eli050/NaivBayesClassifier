@@ -2,6 +2,7 @@ import pandas as pd
 from services.data_cleaner.cleaner_service import CleanData
 from services.data_reader.read_csv import ReadCSV
 from services.model_trainer.create_model import CreateModel
+from random import randint
 
 
 class TestData:
@@ -16,8 +17,9 @@ class TestData:
         for column, value in df.iterrows():
             value = value.drop(target_column)
             list_result.append(self._check_target(value.to_dict()))
-        matches = [item for item in list_result if item in list_targets]
-        correct = (len(matches)/len(list_result))* 100
+        sum_correct = sum(pred == true
+                      for pred, true in zip(list_result, list_targets))
+        correct = (sum_correct/len(list_result))* 100
         return f"grad: {correct:.2f}%"
 
 
@@ -27,7 +29,10 @@ class TestData:
         for target in self.model:
             grades[target] = 0
             for col, value in values.items():
-                grades[target] += self.model[target][col][value]
+                try:
+                    grades[target] += self.model[target][col][value]
+                except KeyError:
+                    grades[target] +=  sum(self.model[target][col].values()) / len(self.model[target][col])
         for key in self.targets_size:
             grades[key] += self.targets_size[key]
         max_targ = max(grades, key = grades.get)
@@ -40,7 +45,7 @@ class TestData:
 
 
 # cd = CleanData()
-# df, target = cd.clean_df(ReadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\test.csv").get_data())
+# df, target = cd.clean_df(ReadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\train.csv").get_data())
 # df_test, target_test = cd.clean_df(ReadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\test.csv").get_data())
 # cm = CreateModel(df,target)
 # dw , ds = cm.get_dict_wights()

@@ -8,7 +8,7 @@ class CleanData:
     @staticmethod
     def clean_df(df:pd.DataFrame):
         cleaner_df = df.dropna()
-        cleaner_df = cleaner_df.drop(columns=['Name','PassengerId'])
+        cleaner_df = cleaner_df.drop(columns=['Name','PassengerId','Ticket','Cabin'])
         conditions = [
             cleaner_df['Age'] < 20,
             cleaner_df['Age'].between(20,39),
@@ -17,6 +17,13 @@ class CleanData:
         ]
         choices = ["< 20","20-39","40-59","60-80"]
         cleaner_df['Age'] = np.select(conditions,choices,default="")
+        conditions = [
+            cleaner_df['Fare'] < 30,
+            cleaner_df['Fare'].between(30, 100),
+            cleaner_df['Fare'] > 100
+        ]
+        choices = ['Cheap', 'Average', 'Expensive']
+        cleaner_df['Fare'] = np.select(conditions, choices, default="")
         cleaner_df['Embarked'] = cleaner_df['Embarked'].replace({
             'C': 'Cherbourg',
             'Q': 'Queenstown',
