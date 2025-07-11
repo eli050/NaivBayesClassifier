@@ -19,8 +19,8 @@ class CleanData:
         cleaner_df['Age'] = np.select(conditions,choices,default="")
         conditions = [
             cleaner_df['Fare'] < 30,
-            cleaner_df['Fare'].between(30, 100),
-            cleaner_df['Fare'] > 100
+            cleaner_df['Fare'].between(30, 150),
+            cleaner_df['Fare'] > 150
         ]
         choices = ['Cheap', 'Average', 'Expensive']
         cleaner_df['Fare'] = np.select(conditions, choices, default="")
@@ -35,5 +35,5 @@ class CleanData:
 
 # cd = CleanData()
 # df = cd.clean_df(ReadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\train.csv").get_data())[0]
-# # print(df["Age"].min())
+# print(df["SibSp"].max())
 # print(df['Embarked'])
