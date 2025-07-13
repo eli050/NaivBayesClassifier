@@ -6,13 +6,19 @@ from services.model_trainer.create_model import CreateModel
 
 
 class Menu:
-    def __init__(self):
-        df = ReadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\train.csv").get_data()
-        self.cleaned_df, self.target = CleanData.clean_df(df)
-        self.model, self.target_size = CreateModel(self.cleaned_df, self.target).get_dict_wights()
+    """Class for displaying a terminal menu to interact with the model"""
+
+    def __init__(self, cleaned_df:pd.DataFrame, test_df:pd.DataFrame, target:str, model:dict, target_size:dict):
+        """Initialize the menu with training and test data, model, and target details"""
+        self.cleaned_df = cleaned_df
+        self.target = target
+        self.model = model
+        self.target_size = target_size
+        self.test_df = test_df
         self.features = [col for col in self.cleaned_df.columns if col != self.target]
 
     def run(self):
+        """Runs the main menu loop, providing options to check model accuracy or predict a single input"""
         while True:
             print("\nChoose an option:")
             print("1. Check model accuracy")
@@ -21,56 +27,64 @@ class Menu:
             choice = input("Enter your choice: ")
 
             if choice == "1":
-                print(TestData(self.model, self.target_size).get_grade(self.cleaned_df, self.target))
+                print(TestData(self.model, self.target_size).get_grade(self.test_df, self.target))
             elif choice == "2":
-                self.predict_individual()
+                prediction = self.predict_individual()
+                print(f"\nPrediction: {prediction}")
             elif choice == "3":
                 print("Goodbye!")
                 break
             else:
                 print("Invalid choice. Try again.")
 
-    def predict_individual(self):
+    def predict_individual(self) -> str:
+        """Prompts the user to enter feature values, then predicts the target based on the input"""
         user_data = dict()
         for col in self.features:
-            values = self.cleaned_df[col].dropna().unique()
-            if self.cleaned_df[col].dtype == 'O' or len(values) < 20:
-                values = sorted(set(values))
-                print(f"\nSelect a value for '{col}':")
-                for i, val in enumerate(values):
-                    print(f"{i + 1}. {val}")
-                while True:
-                    try:
-                        idx = int(input("Enter your choice: "))
-                        if 1 <= idx <= len(values):
-                            user_data[col] = values[idx - 1]
-                            break
-                        else:
-                            print("Choice out of range.")
-                    except ValueError:
-                        print("Please enter a valid number.")
-            else:
-                while True:
-                    try:
-                        val = float(input(f"Enter a numeric value for '{col}': "))
-                        user_data[col] = val
+            values = self.cleaned_df[col].unique()
+            values = sorted(set(values))
+            print(f"\nSelect a value for '{col}':")
+            for i, val in enumerate(values):
+                print(f"{i + 1}. {val}")
+            while True:
+                try:
+                    idx = int(input("Enter your choice: "))
+                    if 1 <= idx <= len(values):
+                        user_data[col] = values[idx - 1]
                         break
-                    except ValueError:
-                        print("Invalid number. Try again.")
+                    else:
+                        print("Choice out of range.")
+                except ValueError:
+                    print("Please enter a valid number.")
 
+        print(user_data)
         result = self._check_target(user_data)
-        prediction = max(result, key=result.get)
-        print(f"\nPrediction: {prediction}")
+        return result
 
-    def _check_target(self, values: dict):
+    def _check_target(self, values: dict) -> str:
+        """Predicts the target class for the given input dictionary using the model"""
+
         grades = dict()
         for target in self.model:
             grades[target] = 0
-            for feature in values:
-                if values[feature] in self.model[target][feature]:
-                    grades[target] += self.model[target][feature][values[feature]]
-        return grades
+            for col, value in values.items():
+                try:
+                    grades[target] += self.model[target][col][value]
+                except KeyError:
+                    grades[target] += sum(self.model[target][col].values()) / len(self.model[target][col])
+        for key in self.target_size:
+            grades[key] += self.target_size[key]
+        max_targ = max(grades, key=grades.get)
+        return max_targ
+
+if __name__ == '__main__':
+
+    df = ReadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\train.csv").get_data()
+    cleaned_df, target = CleanData.clean_df(df)
+    model, target_size = CreateModel(cleaned_df, target).get_dict_wights()
+    df = ReadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\test.csv").get_data()
+    test_df ,test_targ = CleanData.clean_df(df)
 
 
-# menu = Menu()
-# menu.run()
+    menu = Menu(cleaned_df,test_df,target,model,target_size)
+    menu.run()

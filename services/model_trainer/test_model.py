@@ -2,16 +2,30 @@ import pandas as pd
 from services.data_cleaner.cleaner_service import CleanData
 from services.data_reader.read_csv import ReadCSV
 from services.model_trainer.create_model import CreateModel
-from random import randint
+
 
 
 class TestData:
+    """Class for testing data against a trained probabilistic model"""
+
+
     def __init__(self, model:dict,targets_size:dict):
+        """Initialize with the trained model and log-scaled prior probabilities"""
         self.model = model
         self.targets_size = targets_size
 
 
-    def get_grade(self,df:pd.DataFrame,target_column:str):
+    def get_grade(self,df:pd.DataFrame,target_column:str) -> str:
+        """Calculates the prediction accuracy of the model on the provided test DataFrame.
+               Compares predicted targets with actual targets and returns the accuracy percentage.
+
+               Args:
+                   df: DataFrame to test
+                   target_column: Name of the target column in the DataFrame
+
+               Returns:
+                   A string with the prediction accuracy as a percentage
+               """
         list_targets = list(df[target_column])
         list_result = list()
         for column, value in df.iterrows():
@@ -24,7 +38,17 @@ class TestData:
 
 
 
-    def _check_target(self, values:dict):
+    def _check_target(self, values:dict) -> str:
+        """Predicts the target class based on the input feature dictionary.
+               Calculates total score for each target and selects the one with the highest score.
+               Uses average smoothing for unknown feature values.
+
+               Args:
+                   values: Dictionary of feature values for a single sample
+
+               Returns:
+                   The predicted target class
+               """
         grades = dict()
         for target in self.model:
             grades[target] = 0

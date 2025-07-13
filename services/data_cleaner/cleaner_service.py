@@ -5,8 +5,18 @@ from services.data_reader.read_csv import ReadCSV
 
 
 class CleanData:
+    """Class for cleaning and preprocessing a Titanic dataset"""
+
+
     @staticmethod
     def clean_df(df:pd.DataFrame):
+        """Cleans the DataFrame by:
+              - Dropping missing values and irrelevant columns
+              - Binning 'Age' into ranges
+              - Binning 'Fare' into categories
+              - Replacing 'Embarked' codes with full port names
+              Returns the cleaned DataFrame and the target column name
+              """
         cleaner_df = df.dropna()
         cleaner_df = cleaner_df.drop(columns=['Name','PassengerId','Ticket','Cabin'])
         conditions = [
