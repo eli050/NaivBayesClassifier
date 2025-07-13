@@ -30,7 +30,6 @@ class TestData:
         list_result = list()
         for column, value in df.iterrows():
             value = value.drop(target_column)
-            print(value.to_dict())
             list_result.append(self._check_target(value.to_dict()))
         sum_correct = sum(pred == true
                       for pred, true in zip(list_result, list_targets))
@@ -69,10 +68,10 @@ class TestData:
 
 
 
-cd = CleanData()
-df, target = cd.clean_df(ReadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\train.csv").get_data())
-df_test, target_test = cd.clean_df(ReadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\test.csv").get_data())
-cm = CreateModel(df,target)
-dw , ds = cm.get_dict_wights()
-td = TestData(dw,ds)
-print(td.get_grade(df_test, target_test))
+# cd = CleanData()
+# df, target = cd.clean_df(ReadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\train.csv").get_data())
+# df_test, target_test = cd.clean_df(ReadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\test.csv").get_data())
+# cm = CreateModel(df,target)
+# dw , ds = cm.get_dict_wights()
+# td = TestData(dw,ds)
+# print(td.get_grade(df_test, target_test))

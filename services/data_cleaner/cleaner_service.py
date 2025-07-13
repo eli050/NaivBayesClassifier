@@ -17,7 +17,7 @@ class CleanData:
               - Replacing 'Embarked' codes with full port names
               Returns the cleaned DataFrame and the target column name
               """
-        cleaner_df = df.dropna()
+        cleaner_df = df.dropna().copy(deep=True)
         cleaner_df = cleaner_df.drop(columns=['Name','PassengerId','Ticket','Cabin'])
         conditions = [
             cleaner_df['Age'] < 20,
@@ -45,5 +45,7 @@ class CleanData:
 
 # cd = CleanData()
 # df = cd.clean_df(ReadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\train.csv").get_data())[0]
+#
+# print(df.head())
 # print(df["SibSp"].max())
 # print(df['Embarked'])
