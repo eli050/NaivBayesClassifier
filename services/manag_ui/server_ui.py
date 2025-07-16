@@ -11,7 +11,7 @@ CD = CleanData()
 df, target = CD.clean_df(ReadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\train.csv").get_data())
 model, target_size = CreateModel(df, target).get_dict_wights()
 
-@app.get("/predict")
+
 @app.get("/predict")
 def get_grade(
     Pclass: int,
