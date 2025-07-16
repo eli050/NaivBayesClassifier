@@ -68,10 +68,3 @@ class TestData:
 
 
 
-# cd = CleanData()
-# df, target = cd.clean_df(ReadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\train.csv").get_data())
-# df_test, target_test = cd.clean_df(ReadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\test.csv").get_data())
-# cm = CreateModel(df,target)
-# dw , ds = cm.get_dict_wights()
-# td = TestData(dw,ds)
-# print(td.get_grade(df_test, target_test))

@@ -1,18 +1,17 @@
-import uvicorn
-from fastapi import FastAPI
+from fastapi import APIRouter
 
 from services.data_cleaner.cleaner_service import CleanData
 from services.data_reader.read_csv import ReadCSV
 from services.model_trainer.create_model import CreateModel
 
-app = FastAPI()
+router = APIRouter()
 
 CD = CleanData()
 df, target = CD.clean_df(ReadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\train.csv").get_data())
 model, target_size = CreateModel(df, target).get_dict_wights()
 
 
-@app.get("/predict")
+@router.get("/predict")
 def get_grade(
     Pclass: int,
     Sex: str,
@@ -44,6 +43,5 @@ def get_grade(
     max_targ = max(grades, key=grades.get)
     return {"result" : int(max_targ)}
 
-if __name__ == '__main__':
-    uvicorn.run(app)
+
 

@@ -43,9 +43,3 @@ class CleanData:
 
         return cleaner_df, "Survived"
 
-# cd = CleanData()
-# df = cd.clean_df(ReadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\train.csv").get_data())[0]
-#
-# print(df.head())
-# print(df["SibSp"].max())
-# print(df['Embarked'])

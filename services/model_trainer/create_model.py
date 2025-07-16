@@ -50,9 +50,3 @@ class CreateModel:
 
 
 
-# rc = ReadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\train.csv")
-# df_trg = CleanData().clean_df(rc.get_data())
-# pprint(df_trg[0].columns)
-# cm = CreateModel(df_trg[0],df_trg[1])
-# pprint(cm.get_dict_wights()[1])
-# # cm.get_dict_wights()
