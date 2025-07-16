@@ -1,7 +1,4 @@
 import pandas as pd
-from services.data_cleaner.cleaner_service import CleanData
-from services.data_reader.read_csv import ReadCSV
-from services.model_trainer.create_model import CreateModel
 
 
 
@@ -68,10 +65,3 @@ class TestData:
 
 
 
-# cd = CleanData()
-# df, target = cd.clean_df(ReadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\train.csv").get_data())
-# df_test, target_test = cd.clean_df(ReadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\test.csv").get_data())
-# cm = CreateModel(df,target)
-# dw , ds = cm.get_dict_wights()
-# td = TestData(dw,ds)
-# print(td.get_grade(df_test, target_test))

@@ -1,8 +1,6 @@
 import pandas as pd
 import numpy as np
 
-from services.data_reader.read_csv import ReadCSV
-
 
 class CleanData:
     """Class for cleaning and preprocessing a Titanic dataset"""
@@ -43,9 +41,3 @@ class CleanData:
 
         return cleaner_df, "Survived"
 
-# cd = CleanData()
-# df = cd.clean_df(ReadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\train.csv").get_data())[0]
-#
-# print(df.head())
-# print(df["SibSp"].max())
-# print(df['Embarked'])

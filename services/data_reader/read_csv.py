@@ -16,8 +16,3 @@ class ReadCSV:
         except Exception as e:
             print(e)
 
-
-#
-# rc = ReadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\train.csv")
-# df = rc.get_data()
-# print(df.head())
