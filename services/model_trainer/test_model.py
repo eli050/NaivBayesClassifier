@@ -1,7 +1,4 @@
 import pandas as pd
-from services.data_cleaner.cleaner_service import CleanData
-from services.data_reader.read_csv import ReadCSV
-from services.model_trainer.create_model import CreateModel
 
 
 

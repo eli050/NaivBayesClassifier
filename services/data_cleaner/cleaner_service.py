@@ -1,8 +1,6 @@
 import pandas as pd
 import numpy as np
 
-from services.data_reader.read_csv import ReadCSV
-
 
 class CleanData:
     """Class for cleaning and preprocessing a Titanic dataset"""
