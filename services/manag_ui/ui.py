@@ -55,7 +55,6 @@ class Menu:
                 except ValueError:
                     print("Please enter a valid number.")
 
-        print(user_data)
         result = self._check_target(user_data)
         return result
 
