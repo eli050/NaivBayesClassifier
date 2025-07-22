@@ -6,8 +6,10 @@ from services.model_trainer.train_model import Trainer
 router = APIRouter()
 
 CD = CleanData()
-df, target = CD.clean_df(LoadCSV("././Data/train.csv").get_data())
-model, target_size = Trainer(df, target).train_model()
+DF, TARGET = CD.clean_df(LoadCSV("././Data/train.csv").get_data())
+MODEL, TARGET_SIZE = Trainer(DF, TARGET).train_model()
+
+
 
 
 @router.get("/predict")
@@ -30,15 +32,15 @@ def get_grade(
         "Fare": Fare,
         "Embarked": Embarked
     }
-    for target in model:
+    for target in MODEL:
         grades[target] = 0
         for col, value in dict_data.items():
             try:
-                grades[target] += model[target][col][value]
+                grades[target] += MODEL[target][col][value]
             except KeyError:
-                grades[target] += sum(model[target][col].values()) / len(model[target][col])
-    for key in target_size:
-        grades[key] += target_size[key]
+                grades[target] += sum(MODEL[target][col].values()) / len(MODEL[target][col])
+    for key in TARGET_SIZE:
+        grades[key] += TARGET_SIZE[key]
     max_targ = max(grades, key=grades.get)
     return {"result" : int(max_targ)}
 
