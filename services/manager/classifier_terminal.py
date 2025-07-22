@@ -1,9 +1,9 @@
 import pandas as pd
-from services.model_trainer.test_model import TestData
+from services.evaluat_model.test_model import Evaluator
 
 
 
-class Menu:
+class ClassifierMenu:
     """Class for displaying a terminal menu to interact with the model"""
 
     def __init__(self, cleaned_df:pd.DataFrame, test_df:pd.DataFrame, target:str, model:dict, target_size:dict):
@@ -25,7 +25,7 @@ class Menu:
             choice = input("Enter your choice: ")
 
             if choice == "1":
-                print(TestData(self.model, self.target_size).get_grade(self.test_df, self.target))
+                print(Evaluator(self.model, self.target_size).get_grade(self.test_df, self.target))
             elif choice == "2":
                 prediction = self.predict_individual()
                 print(f"\nPrediction: {prediction}")
