@@ -1,13 +1,13 @@
 from fastapi import APIRouter
 from services.data_cleaner.cleaner_service import CleanData
-from services.data_reader.read_csv import ReadCSV
-from services.model_trainer.create_model import CreateModel
+from services.data_loader.load_csv import LoadCSV
+from services.model_trainer.train_model import Trainer
 
 router = APIRouter()
 
 CD = CleanData()
-df, target = CD.clean_df(ReadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\train.csv").get_data())
-model, target_size = CreateModel(df, target).get_dict_wights()
+df, target = CD.clean_df(LoadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\train.csv").get_data())
+model, target_size = Trainer(df, target).train_model()
 
 
 @router.get("/predict")

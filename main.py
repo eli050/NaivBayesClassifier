@@ -1,6 +1,6 @@
 import uvicorn
 from fastapi import FastAPI
-from services.manag_ui.server_ui import router
+from services.manager.classifier_service import router
 
 app = FastAPI()
 

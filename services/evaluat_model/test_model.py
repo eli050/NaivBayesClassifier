@@ -2,7 +2,7 @@ import pandas as pd
 
 
 
-class TestData:
+class Evaluator:
     """Class for testing data against a trained probabilistic model"""
 
 

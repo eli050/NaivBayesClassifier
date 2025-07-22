@@ -1,7 +1,7 @@
 import pandas as pd
 from math import log
 
-class CreateModel:
+class Trainer:
     """Class for building a Naive Bayes-like model based on categorical probabilities"""
 
 
@@ -10,7 +10,7 @@ class CreateModel:
         self.df = df
         self.target_column = target_column
 
-    def get_dict_wights(self):
+    def train_model(self):
         """Creates a nested dictionary of log-probabilities for each feature value given a target class.
                - Calculates log-likelihoods with Laplace smoothing when needed
                - Also returns log-scaled prior probabilities for each target class

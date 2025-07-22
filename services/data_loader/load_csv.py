@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-class ReadCSV:
+class LoadCSV:
     """Class for reading a CSV file and returning it as a DataFrame"""
 
     def __init__(self, file_path):
