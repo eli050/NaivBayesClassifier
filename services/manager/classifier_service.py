@@ -6,7 +6,7 @@ from services.model_trainer.train_model import Trainer
 router = APIRouter()
 
 CD = CleanData()
-df, target = CD.clean_df(LoadCSV("C:\\users\\home\\PycharmProjects\\NaiveBayesClassifier\\Data\\train.csv").get_data())
+df, target = CD.clean_df(LoadCSV("././Data/train.csv").get_data())
 model, target_size = Trainer(df, target).train_model()
 
 
