@@ -1,5 +1,5 @@
 import pandas as pd
-from services.evaluat_model.test_model import Evaluator
+from model_app.services.evaluat_model.test_model import Evaluator
 
 
 
