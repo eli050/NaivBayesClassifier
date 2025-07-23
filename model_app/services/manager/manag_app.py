@@ -1,9 +1,15 @@
+from pprint import pprint
+
 from services.data_cleaner.cleaner_service import CleanData
 from services.data_loader.load_csv import LoadCSV
 from services.evaluat_model.test_model import Evaluator
 from services.model_trainer.train_model import Trainer
-TRAIN_PATH = "././Data/train.csv"
-TEST_PATH = "././Data/test.csv"
+from pathlib import Path
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+
+
+TRAIN_PATH = f"{PROJECT_ROOT}/Data/train.csv"
+TEST_PATH = f"{PROJECT_ROOT}/Data/test.csv"
 
 
 class ManagementApp:

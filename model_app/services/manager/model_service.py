@@ -1,24 +1,31 @@
 from fastapi import APIRouter,FastAPI
 from contextlib import asynccontextmanager
 from services.manager.manag_app import ManagementApp
+from pprint import pprint
 
-TRAIN_PATH = "././Data/train.csv"
-TEST_PATH = "././Data/test.csv"
 router = APIRouter()
 
 
 
-ml_models = {}
+ml_models = dict()
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
-    ml_models.update(ManagementApp.start_flow())
+async def lifespan(app:FastAPI):
+    try:
+        ml_models.update(ManagementApp.start_flow())
+    except Exception as e:
+        ml_models["error"] = e
+    yield
+
 
 
 @router.get("/model")
 def get_model():
-    print(ml_models["grade"])
-    return ml_models["model"], ml_models["target_size"]
+    if "error" not in ml_models:
+        print(ml_models["grade"])
+        return {"model":ml_models["model"], "target_size":ml_models["target_size"]}
+    else:
+        return {"error":"The model is not yet trained."}
 
 
 
