@@ -4,10 +4,10 @@ from services.model_trainer.train_model import Trainer
 from classifier_terminal import ClassifierMenu
 
 if __name__ == '__main__':
-    df = LoadCSV("Data/train.csv").get_data()
+    df = LoadCSV("C:\\Users\\HOME\\PycharmProjects\\NaiveBayesClassifier\\model_app\\Data\\train.csv").get_data()
     cleaned_df, target = CleanData.clean_df(df)
     model, target_size = Trainer(cleaned_df, target).train_model()
-    df = LoadCSV("Data/test.csv").get_data()
+    df = LoadCSV("C:\\Users\\HOME\\PycharmProjects\\NaiveBayesClassifier\\model_app\\Data\\test.csv").get_data()
     test_df ,test_targ = CleanData.clean_df(df)
 
 
