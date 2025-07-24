@@ -66,7 +66,7 @@ def get_grade(
             try:
                 grades[target] += ml_models["model"][target][col][value]
             except KeyError:
-                grades[target] += sum(ml_models["model"][target][col].values()) / len(ml_models["model"][target][col])
+                grades[target] += -7
     for key in ml_models["target_size"]:
         grades[key] += ml_models["target_size"][key]
     max_targ = max(grades, key=grades.get)
