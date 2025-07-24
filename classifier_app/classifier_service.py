@@ -15,6 +15,11 @@ ml_models = dict()
 
 @asynccontextmanager
 async def lifespan(app:FastAPI):
+    """
+       Lifespan event for the FastAPI application.
+       Tries to fetch the model from the external service at BASE_URL
+       and updates the global `ml_models` dictionary with the response.
+       """
     try:
         response = requests.get(BASE_URL)
         ml_models.update(response.json())
@@ -34,6 +39,17 @@ def get_grade(
     Fare: str,
     Embarked: str
 ):
+    """
+        Endpoint that receives passenger-related parameters (like in the Titanic dataset)
+        and returns the predicted target class based on the loaded model.
+
+        Process:
+        1. Builds a dictionary from the input parameters.
+        2. For each possible target, calculates a score by summing the model's weights
+           for each feature. If a value is missing in the model, it uses the average.
+        3. Adds an extra score from `target_size` to each target.
+        4. Returns the target with the highest total score.
+        """
     grades = dict()
     dict_data = {
         "Pclass": Pclass,

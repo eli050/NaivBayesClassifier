@@ -1,7 +1,6 @@
 from fastapi import APIRouter,FastAPI
 from contextlib import asynccontextmanager
 from services.manager.manag_app import ManagementApp
-from pprint import pprint
 
 router = APIRouter()
 
@@ -11,6 +10,12 @@ ml_models = dict()
 
 @asynccontextmanager
 async def lifespan(app:FastAPI):
+    """
+        Lifespan event for the FastAPI application.
+        Initializes the machine learning model by running the full pipeline
+        via ManagementApp. If an error occurs during the process, it is stored
+        in the ml_models dictionary under the key 'error'.
+    """
     try:
         ml_models.update(ManagementApp.start_flow())
     except Exception as e:
@@ -21,6 +26,10 @@ async def lifespan(app:FastAPI):
 
 @router.get("/model")
 def get_model():
+    """
+       Endpoint that returns the trained model and its target size weights.
+       If the model has not been successfully trained, returns an error message.
+    """
     if "error" not in ml_models:
         print(ml_models["grade"])
         return {"model":ml_models["model"], "target_size":ml_models["target_size"]}
@@ -30,37 +39,6 @@ def get_model():
 
 
 
-# @router.get("/predict")
-# def get_grade(
-#     Pclass: int,
-#     Sex: str,
-#     Age: str,
-#     SibSp: int,
-#     Parch: int,
-#     Fare: str,
-#     Embarked: str
-# ):
-#     grades = dict()
-#     dict_data = {
-#         "Pclass": Pclass,
-#         "Sex": Sex,
-#         "Age": Age,
-#         "SibSp": SibSp,
-#         "Parch": Parch,
-#         "Fare": Fare,
-#         "Embarked": Embarked
-#     }
-#     for target in MODEL:
-#         grades[target] = 0
-#         for col, value in dict_data.items():
-#             try:
-#                 grades[target] += MODEL[target][col][value]
-#             except KeyError:
-#                 grades[target] += sum(MODEL[target][col].values()) / len(MODEL[target][col])
-#     for key in TARGET_SIZE:
-#         grades[key] += TARGET_SIZE[key]
-#     max_targ = max(grades, key=grades.get)
-#     return {"result" : int(max_targ)}
-#
+
 
 

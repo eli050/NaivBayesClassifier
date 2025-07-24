@@ -1,5 +1,3 @@
-from pprint import pprint
-
 from services.data_cleaner.cleaner_service import CleanData
 from services.data_loader.load_csv import LoadCSV
 from services.evaluat_model.test_model import Evaluator
@@ -13,8 +11,22 @@ TEST_PATH = f"{PROJECT_ROOT}/Data/test.csv"
 
 
 class ManagementApp:
+    """
+        ManagementApp class orchestrates the full machine learning flow,
+        from loading and cleaning the data to training the model and evaluating it.
+    """
     @staticmethod
     def start_flow():
+        """
+               Executes the complete ML pipeline:
+
+               1. Loads the training data.
+               2. Cleans the training data and separates features and target.
+               3. Trains a model using the cleaned data.
+               4. Loads and cleans the test data.
+               5. Evaluates the model on the test set.
+               6. Returns the model, target size (class weights), and evaluation grade.
+        """
         lc = LoadCSV(TRAIN_PATH)
         data_raw = lc.get_data()
         cd = CleanData()
