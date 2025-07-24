@@ -1,5 +1,5 @@
 import requests
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI, APIRouter, Request
 from contextlib import asynccontextmanager
 
 
@@ -30,15 +30,7 @@ async def lifespan(app:FastAPI):
 
 
 @router_app.get("/predict")
-def get_grade(
-    Pclass: int,
-    Sex: str,
-    Age: str,
-    SibSp: int,
-    Parch: int,
-    Fare: str,
-    Embarked: str
-):
+def get_grade(request: Request):
     """
         Endpoint that receives passenger-related parameters (like in the Titanic dataset)
         and returns the predicted target class based on the loaded model.
@@ -51,15 +43,7 @@ def get_grade(
         4. Returns the target with the highest total score.
         """
     grades = dict()
-    dict_data = {
-        "Pclass": Pclass,
-        "Sex": Sex,
-        "Age": Age,
-        "SibSp": SibSp,
-        "Parch": Parch,
-        "Fare": Fare,
-        "Embarked": Embarked
-    }
+    dict_data = dict(request.query_params)
     for target in ml_models["model"]:
         grades[target] = 0
         for col, value in dict_data.items():
@@ -70,4 +54,4 @@ def get_grade(
     for key in ml_models["target_size"]:
         grades[key] += ml_models["target_size"][key]
     max_targ = max(grades, key=grades.get)
-    return {"result" : int(max_targ)}
+    return {"result" : str(max_targ)}
