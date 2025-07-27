@@ -53,7 +53,7 @@ class Evaluator:
                 try:
                     grades[target] += self.model[target][col][value]
                 except KeyError:
-                    grades[target] +=  sum(self.model[target][col].values()) / len(self.model[target][col])
+                    grades[target] +=  -7
         for key in self.targets_size:
             grades[key] += self.targets_size[key]
         max_targ = max(grades, key = grades.get)

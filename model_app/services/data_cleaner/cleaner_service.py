@@ -23,7 +23,7 @@ class CleanData:
             cleaner_df['Age'].between(40, 59),
             cleaner_df['Age'].between(60, 80)
         ]
-        choices = ["< 20","20-39","40-59","60-80"]
+        choices = ["0-20","20-39","40-59","60-80"]
         cleaner_df['Age'] = np.select(conditions,choices,default="")
         conditions = [
             cleaner_df['Fare'] < 30,
@@ -38,6 +38,6 @@ class CleanData:
             'S': 'Southampton'
 
         })
-
+        cleaner_df = cleaner_df.map(lambda x: str(x) if not isinstance(x, str) else x)
         return cleaner_df, "Survived"
 

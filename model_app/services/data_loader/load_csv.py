@@ -14,5 +14,6 @@ class LoadCSV:
             df = pd.read_csv(self.file_path)
             return df
         except Exception as e:
-            print(e)
+            print(f"------{e}----------")
+            raise
 
