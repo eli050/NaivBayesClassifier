@@ -1,9 +1,9 @@
-from services.data_cleaner.cleaner_service import CleanData
-from services.data_loader.load_csv import LoadCSV
-from services.evaluat_model.test_model import Evaluator
-from services.model_trainer.train_model import Trainer
+from app.cleaner import CleanData
+from app.loader import LoadCSV
+from app.test_model import Evaluator
+from app.train_model import Trainer
 from pathlib import Path
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 
 TRAIN_PATH = f"{PROJECT_ROOT}/Data/train.csv"

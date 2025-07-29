@@ -3,7 +3,7 @@ from fastapi import FastAPI, APIRouter, Request
 from contextlib import asynccontextmanager
 
 
-BASE_URL = "http://model_host:5001/model"
+BASE_URL = "http://model_server:5001/model"
 
 
 router_app = APIRouter()

@@ -1,6 +1,6 @@
 from fastapi import APIRouter,FastAPI
 from contextlib import asynccontextmanager
-from services.manager.manag_app import ManagementApp
+from .pipeline import ManagementApp
 
 router = APIRouter()
 
